@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Container } from "@/components/Container";
 import { useAppFlowStore } from "@/store/useAppFlowStore";
 import { useState, useEffect } from "react";
-import OutlineButton from "./Button";
+import { OutlineButton } from "./Button";
 
 export const Cover = () => {
   const { hasSeenCover, setHasSeenCover } = useAppFlowStore();
