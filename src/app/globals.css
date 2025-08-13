@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-custom-royal-blue: #2b4c7e;
+  --color-custom-midnight-blue: #1a2942;
+  --color-custom-gold-accent: #d4af37;
+  --color-custom-ivory-white: #f7f5e6;
+  --color-custom-light-gray: #d9d9d9;
+  --color-custom-crimson-red: #b8332c;
+  --color-custom-amethyst-purple: #6b4c9a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+button {
+  cursor: pointer;
+}
