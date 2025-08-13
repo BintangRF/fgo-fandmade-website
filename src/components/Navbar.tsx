@@ -26,7 +26,7 @@ export const Navbar = () => {
   return (
     <nav
       className={`top-0 left-0 right-0 z-50 backdrop-blur-md bg-custom-midnight-blue/85 border-b border-custom-gold-accent/40 shadow-md transition-all
-          ${hasSeenCover ? "fixed" : "opacity-0 pointer-events-none"}`}
+          ${hasSeenCover ? "fixed" : "absolute hidden pointer-events-none"}`}
     >
       <div className="container mx-auto flex items-center justify-between px-5 md:px-8 py-3 relative z-10">
         {/* Logo */}
