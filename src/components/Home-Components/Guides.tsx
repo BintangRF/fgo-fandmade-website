@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Container } from "../Container";
 import { SectionTitle } from "../SectionTitle";
 import { FilledButton } from "../Button";
+import Image from "next/image";
 
 type GuideItem = {
   title: string;
@@ -199,11 +200,14 @@ const GuideCard = ({ title, description, image, link }: GuideItem) => {
 
       {/* Image */}
       <div className="relative h-48 overflow-hidden z-10">
-        <img
+        <Image
           src={image}
           alt={title}
+          width={400}
+          height={400}
           className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
           loading="lazy"
+          unoptimized
         />
         <div className="absolute inset-0 bg-gradient-to-t from-custom-midnight-blue/80 to-transparent transition-opacity duration-500 ease-in-out group-hover:opacity-90" />
       </div>
