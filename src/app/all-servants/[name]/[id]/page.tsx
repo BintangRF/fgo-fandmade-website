@@ -38,7 +38,7 @@ export default function ServantDetailPage({
       <Container>
         <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded">
           <p className="font-bold">Servant Not Found</p>
-          <p>The servant you're looking for doesn't exist.</p>
+          <p>Servant not found.</p>
         </div>
       </Container>
     );
