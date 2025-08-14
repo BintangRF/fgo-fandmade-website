@@ -35,7 +35,6 @@ export function ServantCard({
 
   return (
     <div
-      key={id}
       onClick={handleClick}
       className={`relative group rounded-lg overflow-hidden shadow-md shadow-custom-midnight-blue ${height} ${width} bg-custom-midnight-blue border-2 border-custom-ivory-white ${
         link ? "cursor-pointer" : ""

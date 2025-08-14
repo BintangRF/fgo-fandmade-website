@@ -153,7 +153,9 @@ export default function ServantDetailPage({
           <h2 className="text-2xl font-semibold mb-4">Ascensions</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(ascensions).map(([key, url]) => (
-              <ServantCard id={parseInt(key)} imgSrc={url || ""} />
+              <div key={key}>
+                <ServantCard id={parseInt(key)} imgSrc={url || ""} />
+              </div>
             ))}
           </div>
         </div>
@@ -165,7 +167,9 @@ export default function ServantDetailPage({
           <h2 className="text-2xl font-semibold mb-4">Costumes</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(costumes).map(([id, url]) => (
-              <ServantCard id={parseInt(id)} imgSrc={url || ""} />
+              <div key={id}>
+                <ServantCard id={parseInt(id)} imgSrc={url || ""} />
+              </div>
             ))}
           </div>
         </div>
