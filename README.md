@@ -30,7 +30,7 @@ Proyek ini mengambil data servant dari [Atlas Academy API](https://api.atlasacad
 
 ```
 
-[https://api.atlasacademy.io/export/JP/nice\_servant\_lang\_en.json](https://api.atlasacademy.io/export/JP/nice_servant_lang_en.json)
+[https://api.atlasacademy.io/export/JP/nice_servant_lore_lang_en.json](https://api.atlasacademy.io/export/JP/nice_servant_lore_lang_en.json)
 
 ```
 

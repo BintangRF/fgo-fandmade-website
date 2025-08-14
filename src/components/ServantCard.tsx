@@ -122,7 +122,7 @@ export function ServantCard({
       {name && (
         <div className="p-4 relative z-10">
           <h3 className="font-bold text-custom-ivory-white truncate text-shadow-2xs text-shadow-custom-light-gray">
-            {name}
+            {name.split("/").join(" ")}
           </h3>
           <p className="text-sm text-custom-light-gray mt-1">ID: {id}</p>
         </div>

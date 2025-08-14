@@ -49,7 +49,9 @@ export const ServantList = ({ data }: ServantListProps) => {
               servant.extraAssets.charaGraph.ascension[1] ||
               ""
             }
-            link={`/all-servants/${servant.name}/${servant.id}`}
+            link={`/all-servants/${servant.name.split("/").join(" ")}/${
+              servant.id
+            }`}
           />
         ))}
       </div>

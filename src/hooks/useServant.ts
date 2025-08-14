@@ -14,13 +14,15 @@ type ServantData = {
       };
       costume: Record<string, string>;
     };
+    [key: string]: any;
   };
   [key: string]: any;
 };
 
 async function fetchServants() {
   const { data } = await axios.get<ServantData[]>(
-    "https://api.atlasacademy.io/export/JP/nice_servant_lang_en.json"
+    // "https://api.atlasacademy.io/export/JP/nice_servant_lang_en.json"
+    "https://api.atlasacademy.io/export/JP/nice_servant_lore_lang_en.json"
   );
   return data;
   // return data.filter(
