@@ -13,10 +13,17 @@ type ServantListProps = {
 export const ServantList = ({ data }: ServantListProps) => {
   const [batch, setBatch] = useState(20);
 
-  const classId = useClassIdStore((state) => state.classId);
+  const classIdStore = useClassIdStore((state) => state.classId);
 
-  const filteredData = classId
-    ? data.filter((servant) => servant.classId === classId)
+  // class yang bernilai 12 menjadi array class yang diinginkan
+  const allowedClassId =
+    classIdStore === 12
+      ? [33, 38, 40, 20, 22, 24, 26, 29, 9001, 9002, 9003, 9004]
+      : [classIdStore];
+
+  // filter data apabila class id store tersedia maka filter berdasarkan allowed class id
+  const filteredData = classIdStore
+    ? data.filter((servant) => allowedClassId.includes(servant.classId))
     : data;
 
   const visibleData = filteredData.slice(0, batch);

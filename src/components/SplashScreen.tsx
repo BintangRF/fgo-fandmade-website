@@ -96,24 +96,9 @@ export default function SplashScreen({ isLoading }: { isLoading: boolean }) {
                 alt="Splash Screen"
                 fill
                 className="object-contain z-10"
+                draggable={false}
                 unoptimized
                 priority
-              />
-              <motion.div
-                className="size-[20vw] not-md:size-[35vw] rounded-full absolute z-0"
-                style={{
-                  background: "conic-gradient(#FFD700, #FFFFFF, #FFD700)",
-                  WebkitMask:
-                    "radial-gradient(farthest-side, transparent calc(100% - 8px), black 0)",
-                  mask: "radial-gradient(farthest-side, transparent calc(100% - 8px), black 0)",
-                  filter: "drop-shadow(0 0 10px gold)",
-                }}
-                animate={{ rotate: 360 }}
-                transition={{
-                  repeat: Infinity,
-                  ease: "linear",
-                  duration: 2,
-                }}
               />
             </div>
 
