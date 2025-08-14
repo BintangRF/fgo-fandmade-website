@@ -17,3 +17,11 @@ html {
 button {
   cursor: pointer;
 }
+
+.swiper-pagination-bullet {
+  @apply bg-custom-light-gray! border-custom-amethyst-purple border-2;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-custom-amethyst-purple!;
+}

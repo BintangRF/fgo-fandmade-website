@@ -1,166 +1,21 @@
 "use client";
 
-import axios from "axios";
-import Image from "next/image";
 import React, { useState } from "react";
-import { Container } from "./Container";
-import { useQuery } from "@tanstack/react-query";
-import { FilledButton } from "./Button";
-import { SkeletonCard } from "./Skeleton";
+import { Container } from "../Container";
+import { FilledButton } from "../Button";
+import { SkeletonCard } from "../Skeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
-import { SectionTitle } from "./SectionTitle";
-import { motion } from "framer-motion";
+import { SectionTitle } from "../SectionTitle";
+import { useServant } from "@/hooks/useServant";
+import { ServantCard } from "../ServantCard";
 
-type ServantCardProps = {
-  id: number;
-  name: string;
-  className?: string;
-  rarity: number;
-  imgSrc: string;
-};
-
-export function ServantCard({
-  id,
-  name,
-  className,
-  rarity,
-  imgSrc,
-}: ServantCardProps) {
-  return (
-    <div className="relative group rounded-lg overflow-hidden shadow-md shadow-custom-midnight-blue h-full bg-custom-midnight-blue border-2 border-custom-ivory-white">
-      {/* Lingkaran sihir */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-        <motion.div
-          className="w-[85%] aspect-square rounded-full border border-yellow-300/30"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
-
-      {/* Magical gradient animated overlay */}
-      <motion.div
-        className="absolute inset-0 opacity-25"
-        style={{
-          background: `
-            linear-gradient(
-              120deg, 
-              var(--color-custom-royal-blue), 
-              var(--color-custom-crimson-red), 
-              var(--color-custom-royal-blue)
-            )
-          `,
-          backgroundSize: "300% 300%",
-        }}
-        animate={{
-          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-      />
-
-      {/* Efek shimmer gloss */}
-      <span className="absolute z-20 h-full inset-0 bg-gradient-to-r from-transparent via-custom-ivory-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-
-      {/* Gambar Servant */}
-      <div className="relative aspect-[3/4] z-10 overflow-hidden">
-        {imgSrc && (
-          <Image
-            src={imgSrc}
-            alt={name}
-            fill
-            className="object-cover relative"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
-        )}
-
-        {/* Efek overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-full bg-gradient-to-t from-custom-midnight-blue/80 to-transparent z-30" />
-
-        {/* Class Badge */}
-        {/* <div className="absolute top-0 right-0 px-2 py-1 rounded-tr-lg rounded-bl-lg text-lg font-bold bg-custom-amethyst-purple/80 text-custom-ivory-white shadow-md">
-          {className}
-        </div> */}
-
-        {/* Rarity Stars */}
-        <div className="absolute bottom-2 left-2 flex z-30 ">
-          {[...Array(Math.min(rarity, 5))].map((_, i) => (
-            <svg
-              key={i}
-              className="w-4 h-4 text-custom-gold-accent"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                style={{
-                  filter:
-                    "drop-shadow(0 1px 1px var(--color-custom-gold-accent))",
-                }}
-              />
-            </svg>
-          ))}
-        </div>
-      </div>
-
-      {/* Info */}
-      <div className="p-4 relative z-10">
-        <h3 className="font-bold text-custom-ivory-white truncate text-shadow-2xs text-shadow-custom-light-gray">
-          {name}
-        </h3>
-        <p className="text-sm text-custom-light-gray mt-1">ID: {id}</p>
-      </div>
-    </div>
-  );
-}
-
-type ServantData = {
-  id: number;
-  name: string;
-  className: string;
-  rarity: number;
-  extraAssets: {
-    charaGraph: {
-      ascension: {
-        1: string;
-        2?: string;
-        3?: string;
-        4?: string;
-      };
-      costume: Record<string, string>;
-    };
-  };
-};
-
-async function fetchServants() {
-  const { data } = await axios.get<ServantData[]>(
-    "https://api.atlasacademy.io/export/JP/nice_servant_lang_en.json"
-  );
-  return data.filter(
-    (servant) =>
-      servant.extraAssets?.charaGraph?.ascension?.[1] &&
-      servant.className &&
-      servant.rarity
-  );
-}
-
-export default function Servants() {
+export const Servants = () => {
   const router = useRouter();
   const [batch] = useState(20);
 
-  const {
-    data = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["servantData"],
-    queryFn: fetchServants,
-    staleTime: 1000 * 60 * 60,
-  });
+  const { data = [], error } = useServant.useGet();
 
   // extract all unique class names
   // const allClassname = Array.from(
@@ -270,14 +125,8 @@ export default function Servants() {
         mengubah nasib dunia.
       </SectionTitle>
 
-      {isLoading ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {Array.from({ length: 4 }).map((_, idx) => (
-            <SkeletonCard key={idx} className="h-64 rounded-lg" />
-          ))}
-        </div>
-      ) : error ? (
-        <div className="text-center py-12 text-red-400">
+      {error ? (
+        <div className="text-center py-12 text-custom-crimson-red">
           Failed to load servant data. Please try again later.
         </div>
       ) : (
@@ -292,11 +141,13 @@ export default function Servants() {
                 1024: { slidesPerView: 3 },
                 1280: { slidesPerView: 4 },
               }}
-              navigation
-              pagination={{ clickable: true }}
+              pagination={{
+                clickable: true,
+              }}
               autoplay={{ delay: 5000, disableOnInteraction: false }}
-              loop
               className="px-2 py-4 [&_.swiper-button-next]:right-0 [&_.swiper-button-prev]:left-0"
+              navigation
+              loop
             >
               {visibleData.map((servant) => (
                 <SwiperSlide key={servant.id} className="pb-10">
@@ -305,7 +156,7 @@ export default function Servants() {
                     name={servant.name}
                     className={servant.className}
                     rarity={servant.rarity}
-                    imgSrc={servant.extraAssets.charaGraph.ascension[1]}
+                    imgSrc={servant.extraAssets.charaGraph.ascension[1] || ""}
                   />
                 </SwiperSlide>
               ))}
@@ -321,4 +172,4 @@ export default function Servants() {
       )}
     </Container>
   );
-}
+};

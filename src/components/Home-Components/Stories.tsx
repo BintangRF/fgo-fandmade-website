@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Container } from "@/components/Container";
-import { SectionTitle } from "./SectionTitle";
+import { SectionTitle } from "../SectionTitle";
 
 export const Stories = () => {
   const [playVideo, setPlayVideo] = useState(false);

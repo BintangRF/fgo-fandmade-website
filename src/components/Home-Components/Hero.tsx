@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
-import { Container } from "./Container";
+import { Container } from "../Container";
 
 export const Hero = () => {
   const particles = useMemo(() => {

@@ -11,34 +11,41 @@ import {
   animate,
 } from "framer-motion";
 
-export default function SplashScreen() {
-  const setSplashDone = useAppFlowStore((s) => s.setSplashDone);
+export default function SplashScreen({ isLoading }: { isLoading: boolean }) {
   const [show, setShow] = useState(true);
 
   const progress = useMotionValue(0);
+  const setSplashDone = useAppFlowStore((s) => s.setSplashDone);
   const percentage = useTransform(progress, (v) => `${Math.round(v)}%`);
-  const duration = 1000; // durasi splash dalam ms
 
+  // Simulasi progress jalan pelan2
   useEffect(() => {
-    animate(progress, 100, {
-      duration: duration / 1000,
-      ease: "easeInOut",
-    });
-  }, [progress, duration]);
+    let controls: ReturnType<typeof animate>;
 
-  useEffect(() => {
-    // Mulai timer untuk hide splashscreen ketika durasi selesai
-    const timer = setTimeout(() => {
-      setShow(false);
-      setTimeout(() => setSplashDone(true), 500);
-    }, duration);
+    if (isLoading) {
+      controls = animate(progress, 90, {
+        duration: 2,
+        ease: "easeInOut",
+      });
+    } else {
+      // Loncat ke 100% begitu data sudah ready
+      controls = animate(progress, 100, {
+        duration: 0.5,
+        ease: "easeOut",
+        onComplete: () => {
+          setTimeout(() => {
+            setShow(false);
+            setTimeout(() => setSplashDone(true), 500);
+          }, 300);
+        },
+      });
+    }
 
     return () => {
-      clearTimeout(timer);
+      controls?.stop();
     };
-  }, [setSplashDone]);
+  }, [isLoading, progress, setSplashDone]);
 
-  // particles
   const particles = useMemo(() => {
     return Array.from({ length: 20 }).map(() => ({
       top: `${Math.random() * 100}%`,
@@ -51,6 +58,7 @@ export default function SplashScreen() {
   return (
     <div className="overflow-hidden">
       <AnimatePresence>
+        {/* animate show ease */}
         {show && (
           <motion.div
             className="relative flex flex-col items-center justify-center h-screen bg-custom-midnight-blue"
@@ -59,7 +67,7 @@ export default function SplashScreen() {
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Partikel cahaya */}
+            {/* Partikel */}
             {particles.map((p, i) => (
               <motion.div
                 key={i}
@@ -81,9 +89,8 @@ export default function SplashScreen() {
               />
             ))}
 
-            {/* Logo + efek */}
+            {/* Logo */}
             <div className="relative size-1/2 not-md:size-2/3 flex items-center justify-center">
-              {/* Logo */}
               <Image
                 src="/img/fgo-logo.webp"
                 alt="Splash Screen"
@@ -92,8 +99,6 @@ export default function SplashScreen() {
                 unoptimized
                 priority
               />
-
-              {/* Lingkaran gradient berputar */}
               <motion.div
                 className="size-[20vw] not-md:size-[35vw] rounded-full absolute z-0"
                 style={{

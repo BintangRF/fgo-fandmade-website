@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { SectionTitle } from "./SectionTitle";
-import { Container } from "./Container";
-import { FilledButton } from "./Button";
+import { Container } from "../Container";
+import { SectionTitle } from "../SectionTitle";
+import { FilledButton } from "../Button";
 
 type GuideItem = {
   title: string;

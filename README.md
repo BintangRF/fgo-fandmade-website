@@ -24,6 +24,28 @@ Proyek ini dibuat untuk menampilkan informasi, karakter, event, dan konten visua
 
 ---
 
+## 🔗 Sumber Data API
+
+Proyek ini mengambil data servant dari [Atlas Academy API](https://api.atlasacademy.io/), tepatnya dari endpoint:
+
+```
+
+[https://api.atlasacademy.io/export/JP/nice\_servant\_lang\_en.json](https://api.atlasacademy.io/export/JP/nice_servant_lang_en.json)
+
+```
+
+API ini menyediakan informasi lengkap tentang servant, termasuk:
+
+- ID dan nama servant
+- Class & rarity
+- Asset gambar ascension dan costume
+- Data pendukung lainnya
+
+Dokumentasi lengkap API: [https://api.atlasacademy.io/docs/](https://api.atlasacademy.io/docs/)
+
+````
+---
+
 ## 📦 Instalasi
 
 Pastikan Anda sudah menginstal **Node.js** dan **npm** atau **yarn**.
@@ -39,4 +61,4 @@ cd fgo-website
 npm install
 # atau
 yarn install
-```
+````

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "next-themes";
 import QueryProvider from "@/lib/query-provider";
 import ClientLayout from "./client-layout";
 
@@ -25,15 +24,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <link rel="icon" href="/img/icon.png" sizes="any" />
-        {/* <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-        > */}
         <QueryProvider>
           <ClientLayout>{children}</ClientLayout>
         </QueryProvider>
-        {/* </ThemeProvider> */}
       </body>
     </html>
   );

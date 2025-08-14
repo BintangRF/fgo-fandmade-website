@@ -1,6 +1,6 @@
 import React from "react";
-import { Container } from "./Container";
-import { SectionTitle } from "./SectionTitle";
+import { Container } from "../Container";
+import { SectionTitle } from "../SectionTitle";
 
 type CommunityCardProps = {
   icon: React.ReactNode;
@@ -63,7 +63,7 @@ function CommunityCard({
   );
 }
 
-export default function Community() {
+export const Community = () => {
   return (
     <Container
       id="community"
@@ -152,4 +152,4 @@ export default function Community() {
       </div>
     </Container>
   );
-}
+};
