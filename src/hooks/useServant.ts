@@ -10,15 +10,12 @@ type ServantData = {
   extraAssets: {
     charaGraph: {
       ascension: {
-        0?: string;
-        1?: string;
-        2?: string;
-        3?: string;
-        4?: string;
+        [key: number]: string;
       };
       costume: Record<string, string>;
     };
   };
+  [key: string]: any;
 };
 
 async function fetchServants() {

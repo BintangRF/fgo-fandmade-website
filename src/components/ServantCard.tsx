@@ -1,14 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 type ServantCardProps = {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   className?: string;
-  rarity: number;
+  rarity?: number;
   imgSrc: string;
   height?: string;
   width?: string;
+  link?: string;
 };
 
 export function ServantCard({
@@ -19,10 +23,22 @@ export function ServantCard({
   imgSrc,
   height = "w-full",
   width = "w-full",
+  link,
 }: ServantCardProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (link) {
+      router.push(link);
+    }
+  };
+
   return (
     <div
-      className={`relative group rounded-lg overflow-hidden shadow-md shadow-custom-midnight-blue ${height} ${width} bg-custom-midnight-blue border-2 border-custom-ivory-white`}
+      onClick={handleClick}
+      className={`relative group rounded-lg overflow-hidden shadow-md shadow-custom-midnight-blue ${height} ${width} bg-custom-midnight-blue border-2 border-custom-ivory-white ${
+        link ? "cursor-pointer" : ""
+      }`}
     >
       {/* Lingkaran sihir */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
@@ -65,7 +81,7 @@ export function ServantCard({
         {imgSrc && (
           <Image
             src={imgSrc}
-            alt={name}
+            alt={name || ""}
             fill
             className="object-cover relative"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -82,7 +98,7 @@ export function ServantCard({
 
         {/* Rarity Stars */}
         <div className="absolute bottom-2 left-2 flex z-30 ">
-          {[...Array(Math.min(rarity, 5))].map((_, i) => (
+          {[...Array(Math.min(rarity || 0, 5))].map((_, i) => (
             <svg
               key={i}
               className="w-4 h-4 text-custom-gold-accent"
@@ -102,12 +118,15 @@ export function ServantCard({
       </div>
 
       {/* Info */}
-      <div className="p-4 relative z-10">
-        <h3 className="font-bold text-custom-ivory-white truncate text-shadow-2xs text-shadow-custom-light-gray">
-          {name}
-        </h3>
-        <p className="text-sm text-custom-light-gray mt-1">ID: {id}</p>
-      </div>
+
+      {name && (
+        <div className="p-4 relative z-10">
+          <h3 className="font-bold text-custom-ivory-white truncate text-shadow-2xs text-shadow-custom-light-gray">
+            {name}
+          </h3>
+          <p className="text-sm text-custom-light-gray mt-1">ID: {id}</p>
+        </div>
+      )}
     </div>
   );
 }

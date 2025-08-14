@@ -6,7 +6,7 @@ import { Container } from "@/components/Container";
 import { useServant } from "@/hooks/useServant";
 import React from "react";
 
-export default function AllServants() {
+export default function AllServantsPage() {
   const { data = [], error } = useServant.useGet();
 
   if (error) return <div>Error: {error.message}</div>;

@@ -7,6 +7,7 @@ import Link from "next/link";
 export const BreadcrumbLink = () => {
   const pathname = usePathname();
   const paths = pathname.split("/").filter(Boolean);
+  const filteredPaths = paths.filter((segment) => !/^\d+$/.test(segment));
 
   return (
     <div>
@@ -29,9 +30,9 @@ export const BreadcrumbLink = () => {
           <span className="group-hover:underline">Home</span>
         </Link>
 
-        {paths.map((segment, index) => {
-          const href = "/" + paths.slice(0, index + 1).join("/");
-          const isLast = index === paths.length - 1;
+        {filteredPaths.map((segment, index) => {
+          const href = "/" + filteredPaths.slice(0, index + 1).join("/");
+          const isLast = index === filteredPaths.length - 1;
 
           return (
             <React.Fragment key={href}>
@@ -51,10 +52,12 @@ export const BreadcrumbLink = () => {
               </svg>
 
               {isLast ? (
-                <span className="font-semibold capitalize">{segment}</span>
+                <span className="font-semibold capitalize">
+                  {decodeURIComponent(segment)}
+                </span>
               ) : (
                 <Link href={href} className="hover:underline capitalize">
-                  {segment}
+                  {decodeURIComponent(segment)}
                 </Link>
               )}
             </React.Fragment>
