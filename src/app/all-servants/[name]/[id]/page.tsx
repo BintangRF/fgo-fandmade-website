@@ -9,13 +9,10 @@ import { Traits } from "@/components/Servant-Detail-Components/Traits";
 import { AscensionsCostumes } from "@/components/Servant-Detail-Components/AscenscionCostumes";
 import { NoblePhantasm } from "@/components/Servant-Detail-Components/NoblePhantasm";
 import { Skills } from "@/components/Servant-Detail-Components/Skills";
+import { useParams } from "next/navigation";
 
-export default function ServantDetailPage({
-  params,
-}: {
-  params: Promise<{ name: string; id: string }>;
-}) {
-  const resolvedParams = React.use(params);
+export default function ServantDetailPage() {
+  const params = useParams<{ name: string; id: string }>();
 
   const { data, isLoading, error } = useServant.useGet();
 
@@ -32,7 +29,7 @@ export default function ServantDetailPage({
     );
   }
 
-  const servantId = Number(resolvedParams.id);
+  const servantId = Number(params.id);
   const servant = data?.find((s) => s.id === servantId);
 
   if (!servant) {
