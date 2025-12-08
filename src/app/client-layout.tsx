@@ -16,11 +16,9 @@ export default function ClientLayout({
   const pathname = usePathname();
   const splashDone = useAppFlowStore((s) => s.splashDone);
   const hasSeenCover = useAppFlowStore((s) => s.hasSeenCover);
-  const { isLoading } = useServant.useGet(); // ambil status loading
+  const { isLoading } = useServant.useGet();
 
   if (!splashDone) return <SplashScreen isLoading={isLoading} />;
-
-  console.log(pathname);
 
   return (
     <>

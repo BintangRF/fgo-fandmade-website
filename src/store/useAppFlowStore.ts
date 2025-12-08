@@ -1,4 +1,5 @@
-// store/useAppFlowStore.ts
+"use client";
+
 import { create } from "zustand";
 
 type AppFlowState = {

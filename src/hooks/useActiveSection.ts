@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import { useScrollStore } from "@/store/useScrollStore";
 

@@ -13,6 +13,9 @@ import {
 
 export default function SplashScreen({ isLoading }: { isLoading: boolean }) {
   const [show, setShow] = useState(true);
+  const [particles, setParticles] = useState<
+    { top: string; left: string; delay: number; duration: number }[]
+  >([]);
 
   const progress = useMotionValue(0);
   const setSplashDone = useAppFlowStore((s) => s.setSplashDone);
@@ -46,13 +49,15 @@ export default function SplashScreen({ isLoading }: { isLoading: boolean }) {
     };
   }, [isLoading, progress, setSplashDone]);
 
-  const particles = useMemo(() => {
-    return Array.from({ length: 20 }).map(() => ({
+  useEffect(() => {
+    const arr = Array.from({ length: 20 }).map(() => ({
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
       delay: Math.random() * 2,
       duration: 2 + Math.random() * 2,
     }));
+
+    setParticles(arr);
   }, []);
 
   return (

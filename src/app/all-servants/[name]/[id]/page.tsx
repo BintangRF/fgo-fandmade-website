@@ -1,11 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import React from "react";
 import { Container } from "@/components/Container";
 import { useServant } from "@/hooks/useServant";
-import React, { useState } from "react";
-import { ServantCard } from "@/components/ServantCard";
-import { deckAssets } from "@/data/deck";
 import { HeroSection } from "@/components/Servant-Detail-Components/HeroSection";
 import { StatsGrid } from "@/components/Servant-Detail-Components/StatsGrid";
 import { Traits } from "@/components/Servant-Detail-Components/Traits";
@@ -16,11 +13,15 @@ import { Skills } from "@/components/Servant-Detail-Components/Skills";
 export default function ServantDetailPage({
   params,
 }: {
-  params: { name: string; id: string };
+  params: Promise<{ name: string; id: string }>;
 }) {
-  const { data = [], error } = useServant.useGet();
+  const resolvedParams = React.use(params);
 
-  if (error)
+  const { data, isLoading, error } = useServant.useGet();
+
+  if (isLoading) return <Container>Loading...</Container>;
+
+  if (error) {
     return (
       <Container>
         <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded">
@@ -29,9 +30,10 @@ export default function ServantDetailPage({
         </div>
       </Container>
     );
+  }
 
-  const servantId = parseInt(params.id, 10);
-  const servant = data.find((s) => s.id === servantId);
+  const servantId = Number(resolvedParams.id);
+  const servant = data?.find((s) => s.id === servantId);
 
   if (!servant) {
     return (
@@ -44,26 +46,22 @@ export default function ServantDetailPage({
     );
   }
 
-  const ascensions = servant.extraAssets?.charaGraph?.ascension || {};
-  const costumes = servant.extraAssets?.charaGraph?.costume || {};
-  const activeSkills = servant.skills || [];
-  const classSkills = servant.classPassive || [];
-  const noblePhantasms = servant.noblePhantasms || [];
-  const traits = servant.traits?.map((t: { name: string }) => t.name) || [];
-
   return (
     <Container>
       <HeroSection servant={servant} />
-
       <StatsGrid servant={servant} />
-
-      <Traits traits={traits} />
-
-      <AscensionsCostumes ascensions={ascensions} costumes={costumes} />
-
-      <NoblePhantasm noblePhantasms={noblePhantasms} />
-
-      <Skills activeSkills={activeSkills} classSkills={classSkills} />
+      <Traits
+        traits={servant.traits?.map((t: { name: string }) => t.name) || []}
+      />
+      <AscensionsCostumes
+        ascensions={servant.extraAssets?.charaGraph?.ascension || {}}
+        costumes={servant.extraAssets?.charaGraph?.costume || {}}
+      />
+      <NoblePhantasm noblePhantasms={servant.noblePhantasms || []} />
+      <Skills
+        activeSkills={servant.skills || []}
+        classSkills={servant.classPassive || []}
+      />
     </Container>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { ServantCard } from "@/components/ServantCard";
 import { deckAssets } from "@/data/deck";

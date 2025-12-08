@@ -1,3 +1,5 @@
+"use client";
+
 import { Hero } from "@/components/Home-Components/Hero";
 import { Guides } from "@/components/Home-Components/Guides";
 import { Stories } from "@/components/Home-Components/Stories";

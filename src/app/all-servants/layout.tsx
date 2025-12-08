@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { SecondNavbar } from "@/components/SecondNavbar";
 import { BreadcrumbLink } from "@/components/BreadcrumbLink";
