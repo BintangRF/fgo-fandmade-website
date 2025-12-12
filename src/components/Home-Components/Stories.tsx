@@ -51,7 +51,6 @@ export const Stories = () => {
         {!playVideo && (
           <div className="relative w-full h-0 pb-[56.25%] bg-gradient-to-br from-custom-amethyst-purple/70 to-custom-crimson-red/50">
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="absolute inset-0 bg-[url('/images/fgo-bg-pattern.png')] opacity-15"></div>
               <button
                 onClick={() => setPlayVideo(true)}
                 className="relative z-10 group"
